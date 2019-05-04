@@ -6,7 +6,7 @@ import com.rtonholo.study.instagram.usecases.base.UseCase
 
 class RequestUserData(private val mUserRepository: UserRepository) :
     UseCase<RequestUserData.RequestValues, RequestUserData.ResponseValues>() {
-    override fun invoke(param: RequestValues): ResponseValues {
+    override suspend fun invoke(param: RequestValues): ResponseValues {
         val user = mUserRepository.getUserData(param.id)
 
         val followedBy = mUserRepository.getFollowedBy(from = user)
