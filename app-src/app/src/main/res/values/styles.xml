@@ -17,4 +17,20 @@
 
   <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+  <style name="AppTheme.NavigationBar" />
+  <style name="AppTheme.NavigationBar.Bottom">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:contentDescription">@null</item>
+    <item name="android:padding">8dp</item>
+    <item name="android:layout_marginRight">24dp</item>
+    <item name="android:layout_marginLeft">24dp</item>
+    <item name="android:layout_marginTop">4dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:tint">@color/black</item>
+  </style>
+
+  <style name="AppTheme.TextAppearance.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+    <item name="android:textColor">@color/black</item>
+  </style>
 </resources>

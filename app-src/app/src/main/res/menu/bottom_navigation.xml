@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
   <item
       android:id="@+id/mn_home"
       android:icon="@drawable/ic_home_outline"
+      app:showAsAction="always"
       android:title="@null"/>
   <item
       android:id="@+id/mn_search"
       android:icon="@drawable/ic_magnify"
+      app:showAsAction="always"
       android:title="@null"/>
   <item
       android:id="@+id/mn_new_media"
       android:icon="@drawable/ic_plus_box_outline"
+      app:showAsAction="always"
       android:title="@null"/>
   <item
       android:id="@+id/mn_notifications"
       android:icon="@drawable/ic_heart_outline"
+      app:showAsAction="always"
       android:title="@null"/>
   <item
       android:id="@+id/mn_user_data"
       android:icon="@drawable/ic_account_outline"
+      app:showAsAction="always"
       android:title="@null"/>
 </menu>
