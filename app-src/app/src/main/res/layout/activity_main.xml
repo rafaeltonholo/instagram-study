@@ -49,33 +49,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
       <ImageView
-          android:id="@+id/img_home"
+          android:id="@+id/imb_home"
           style="@style/AppTheme.NavigationBar.Bottom"
           android:src="@drawable/ic_home_outline"
           app:layout_constraintTop_toTopOf="parent"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintLeft_toLeftOf="parent"/>
       <ImageView
-          android:id="@+id/img_search"
+          android:id="@+id/imb_search"
           style="@style/AppTheme.NavigationBar.Bottom"
           android:src="@drawable/ic_magnify"
           app:layout_constraintTop_toTopOf="parent"
           app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintLeft_toRightOf="@+id/img_home"/>
+          app:layout_constraintLeft_toRightOf="@+id/imb_home"/>
       <ImageView
-          android:id="@+id/img_notification"
+          android:id="@+id/imb_notification"
           style="@style/AppTheme.NavigationBar.Bottom"
           android:src="@drawable/ic_heart_outline"
           app:layout_constraintTop_toTopOf="parent"
           app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintLeft_toRightOf="@+id/img_search"/>
+          app:layout_constraintLeft_toRightOf="@+id/imb_search"/>
       <ImageView
-          android:id="@+id/img_user_data"
+          android:id="@+id/imb_user_data"
           style="@style/AppTheme.NavigationBar.Bottom"
           android:src="@drawable/ic_account_outline"
           app:layout_constraintTop_toTopOf="parent"
           app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintLeft_toRightOf="@id/img_notification"/>
+          app:layout_constraintLeft_toRightOf="@id/imb_notification"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
   </com.google.android.material.bottomappbar.BottomAppBar>
   <com.google.android.material.floatingactionbutton.FloatingActionButton
