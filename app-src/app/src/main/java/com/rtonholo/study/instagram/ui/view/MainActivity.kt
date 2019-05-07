@@ -10,8 +10,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        nav_bottom.setOnNavigationItemSelectedListener {
-            true
+//        nav_bottom.setOnNavigationItemSelectedListener {
+//            true
+//        }
+
+        imb_user_data.setOnClickListener {
+            val frag = UserDataFragment.newInstance()
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.frm_holder, frag, UserDataFragment.fragmentTag)
+                .commit()
         }
     }
 }
