@@ -8,18 +8,28 @@ import kotlin.random.Random
 class InMemoryUserPersistenceSource : UserPersistenceSource {
 
     private val mUsers = generateUsers(1000)
+    private var mFollows: List<Follower>? = null
+    private var mFolloweedBy: List<Follower>? = null
 
     override fun getUserData(id: String): User = mUsers.first { it.id == id }
 
-    override fun getFollows(by: User): List<Follower> =
-        getFollowerObjectFromUsers(Random.nextInt()..mUsers.size) {
+    override fun getFollows(by: User): List<Follower> {
+        mFollows = if (mFollows != null) mFollows
+        else getFollowerObjectFromUsers(Random.nextInt(0, mUsers.size) until mUsers.size) {
             it.id != by.id
         }
 
-    override fun getFollowedBy(from: User): List<Follower> =
-        getFollowerObjectFromUsers(Random.nextInt()..mUsers.size) {
+        return mFollows!!
+    }
+
+    override fun getFollowedBy(from: User): List<Follower> {
+        mFolloweedBy = if (mFolloweedBy != null) mFolloweedBy
+        else getFollowerObjectFromUsers(Random.nextInt(0, mUsers.size) until mUsers.size) {
             it.id != from.id
         }
+
+        return mFolloweedBy!!
+    }
 
     private fun generateUsers(howManyUsers: Int): MutableList<User> =
         (listOf(
@@ -28,7 +38,8 @@ class InMemoryUserPersistenceSource : UserPersistenceSource {
                 username = "rafaeltonholo",
                 fullName = "Rafael Tonholo",
                 isBusiness = false,
-                profilePicture = ""
+                profilePicture = "",
+                bio = "This is my study Instagram case.\nIt try to do the same but with some layout improvements."
             )
         ) + (2..howManyUsers).map {
             User(
@@ -44,5 +55,12 @@ class InMemoryUserPersistenceSource : UserPersistenceSource {
         mUsers
             .filter(predicate)
             .subList(range.first, range.last)
-            .map { Follower(id = it.id, username = it.username, profilePicture = it.profilePicture, fullName = it.fullName) }
+            .map {
+                Follower(
+                    id = it.id,
+                    username = it.username,
+                    profilePicture = it.profilePicture,
+                    fullName = it.fullName
+                )
+            }
 }
