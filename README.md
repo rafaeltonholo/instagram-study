@@ -1,9 +1,11 @@
 # Instagram
 
-## Descrição do projeto
-Este projeto é um projeto de Estudo que visa fazer uma cópia do layout do Instagram fazendo-o nativamente.
+## Project Description
+This is a Study project trying to do a replica of Instagram's app, doing it in Android Native using Kotlin and Material Design.
 
-## Tecnologias Usadas
-- Android Nativo
+This project will add a server side to get the data 
+
+## Technologies
+- Native Android
 - Kotlin
-- .NET Core
+- .NET Core (May change to Kotlin. TBD.)
