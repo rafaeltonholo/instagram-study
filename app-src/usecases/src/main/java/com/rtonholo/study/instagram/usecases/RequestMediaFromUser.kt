@@ -7,7 +7,7 @@ import com.rtonholo.study.instagram.usecases.base.UseCase
 
 class RequestMediaFromUser(private val mMediaRepository: MediaRepository) :
     UseCase<RequestMediaFromUser.RequestValues, RequestMediaFromUser.ResponseValues>() {
-    override operator fun invoke(param: RequestValues): ResponseValues =
+    override suspend operator fun invoke(param: RequestValues): ResponseValues =
         ResponseValues(mMediaRepository.requestMedia(fromUser = param.user))
 
     data class RequestValues(val user: User) : UseCase.RequestValues
