@@ -2,13 +2,15 @@ package com.rtonholo.study.instagram.ui.presenter
 
 import com.rtonholo.study.instagram.domain.User
 import com.rtonholo.study.instagram.ui.presenter.base.Presenter
+import com.rtonholo.study.instagram.usecases.RequestMediaFromUser
 import com.rtonholo.study.instagram.usecases.RequestUserData
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 class UserDataPresenter(
     private var mView: View?,
-    private val mRequestUserData: RequestUserData
+    private val mRequestUserData: RequestUserData,
+    private val mRequestMediaFromUser: RequestMediaFromUser
 ) : Presenter, CoroutineScope {
     private lateinit var mJob: Job
 
@@ -19,8 +21,13 @@ class UserDataPresenter(
         mJob = Job()
         launch {
             val userId = "1"
-            val requestValues = RequestUserData.RequestValues(userId)
-            val userData = mRequestUserData(requestValues)
+            val userDataParams = RequestUserData.RequestValues(userId)
+            val userData = mRequestUserData(userDataParams)
+
+            val userMediaParams = RequestMediaFromUser.RequestValues(user = User(id = userId))
+            val userMedia = mRequestMediaFromUser(userMediaParams)
+            val user = userData.user
+            user.medias.addAll(userMedia.medias)
             withContext(Dispatchers.Main) { mView?.renderUserData(userData = userData.user) }
         }
 

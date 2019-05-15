@@ -9,11 +9,14 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.rtonholo.study.instagram.R
+import com.rtonholo.study.instagram.data.MediaRepository
 import com.rtonholo.study.instagram.data.UserRepository
 import com.rtonholo.study.instagram.domain.User
+import com.rtonholo.study.instagram.framework.InMemoryMediaPersistenceSource
 import com.rtonholo.study.instagram.framework.InMemoryUserPersistenceSource
 import com.rtonholo.study.instagram.ui.presenter.UserDataPresenter
 import com.rtonholo.study.instagram.ui.view.userdata.adapter.UserDataViewPagerAdapter
+import com.rtonholo.study.instagram.usecases.RequestMediaFromUser
 import com.rtonholo.study.instagram.usecases.RequestUserData
 import kotlinx.android.synthetic.main.user_data_fragment.*
 import kotlinx.android.synthetic.main.user_data_fragment.view.*
@@ -32,7 +35,14 @@ class UserDataFragment : Fragment(), UserDataPresenter.View {
     init {
         val persistence = InMemoryUserPersistenceSource()
         val userRepository = UserRepository(persistence)
-        mPresenter = UserDataPresenter(this, RequestUserData(userRepository))
+
+        val mediaPersistenceSource = InMemoryMediaPersistenceSource()
+        val mediaRepository = MediaRepository(mediaPersistenceSource)
+        mPresenter = UserDataPresenter(
+            this,
+            RequestUserData(userRepository),
+            RequestMediaFromUser(mediaRepository)
+        )
     }
 
     override fun onCreateView(
@@ -47,8 +57,6 @@ class UserDataFragment : Fragment(), UserDataPresenter.View {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(UserDataViewModel::class.java)
         mPresenter.onCreate()
-
-        setupViewPager(mView)
     }
 
     override fun onDestroy() {
@@ -63,12 +71,14 @@ class UserDataFragment : Fragment(), UserDataPresenter.View {
         txt_following.text = userData.follows.size.toString()
         txt_posts.text = userData.medias.size.toString()
         activity?.findViewById<TextView>(R.id.txt_title_toolbar)?.text = userData.username
+
+        setupViewPager(mView, userData)
     }
 
-    private fun setupViewPager(view: View) {
+    private fun setupViewPager(view: View, user: User) {
         if (fragmentManager != null) {
             val viewPager = view.vwp_user_medias
-            val adapter = UserDataViewPagerAdapter(fragmentManager!!)
+            val adapter = UserDataViewPagerAdapter(fragmentManager!!, user)
             viewPager.adapter = adapter
             view.tbl_media_type.setupWithViewPager(viewPager)
             adapter.setupTabLayoutIcons(view.tbl_media_type)

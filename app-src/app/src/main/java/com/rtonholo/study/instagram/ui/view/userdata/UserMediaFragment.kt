@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.rtonholo.study.instagram.R
+import com.rtonholo.study.instagram.domain.Media
+import com.rtonholo.study.instagram.ui.view.userdata.adapter.UserMediaRecyclerViewAdapter
 
 import com.rtonholo.study.instagram.ui.view.userdata.dummy.DummyContent
 import com.rtonholo.study.instagram.ui.view.userdata.dummy.DummyContent.DummyItem
@@ -21,8 +23,8 @@ import com.rtonholo.study.instagram.ui.view.userdata.dummy.DummyContent.DummyIte
  */
 class UserMediaFragment : Fragment() {
 
-    // TODO: Customize parameters
-    private var columnCount = 1
+    private var mColumnCount = 1
+    private var mMedias = listOf<Media>()
 
     private var listener: OnListFragmentInteractionListener? = null
 
@@ -30,7 +32,8 @@ class UserMediaFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
+            mColumnCount = it.getInt(ARG_COLUMN_COUNT)
+            mMedias = it.getParcelableArrayList(ARG_MEDIAS)!!
         }
     }
 
@@ -44,10 +47,13 @@ class UserMediaFragment : Fragment() {
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
+                    mColumnCount <= 1 -> LinearLayoutManager(context)
+                    else -> GridLayoutManager(context, mColumnCount)
                 }
-                adapter = UserMediaRecyclerViewAdapter(DummyContent.ITEMS, listener)
+                adapter = UserMediaRecyclerViewAdapter(
+                    mMedias,
+                    listener
+                )
             }
         }
         return view
@@ -85,15 +91,16 @@ class UserMediaFragment : Fragment() {
 
     companion object {
 
-        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
+        const val ARG_MEDIAS = "medias"
 
         // TODO: Customize parameter initialization
         @JvmStatic
-        fun newInstance(columnCount: Int) =
+        fun newInstance(columnCount: Int, medias: List<Media>) =
             UserMediaFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
+                    putParcelableArrayList(ARG_MEDIAS, ArrayList(medias))
                 }
             }
     }
